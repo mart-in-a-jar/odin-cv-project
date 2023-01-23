@@ -11,15 +11,19 @@ class Personalia extends Component {
                     <div className="text-inputs">
                         <FirstName
                             mode={mode}
-                            name={personalia.firstName}
+                            value={personalia.firstName}
                             onChange={onChange}
                         />
                         <LastName
                             mode={mode}
-                            name={personalia.lastName}
+                            value={personalia.lastName}
                             onChange={onChange}
                         />
-                        <input type="text" />
+                        <Email
+                            mode={mode}
+                            value={personalia.email}
+                            onChange={onChange}
+                        />
                         <input type="text" />
                     </div>
                     <img className="userPhoto" src="" alt="userphoto" />
@@ -31,53 +35,36 @@ class Personalia extends Component {
 
 export default Personalia;
 
-const FirstName = (props) => {
-    const { mode, name, onChange } = props;
 
-    let element = (
-        <input
-            type="text"
-            id="first-name"
-            name="firstName"
-            value={name}
-            onChange={onChange}
-            required
-        />
-    );
+const componentGenerator = (type, id, label) => {
+    const Component = (props) => {
+        const { mode, value, onChange } = props;
 
-    if (mode.preview) {
-        element = <div id="first-name">{name}</div>;
-    }
+        let element = (
+            <input
+                type={type}
+                id={id}
+                name={id}
+                value={value}
+                onChange={onChange}
+            />
+        );
 
-    return (
-        <div className="first-name">
-            <label htmlFor="first-name">First name</label>
-            {element}
-        </div>
-    );
+        if (mode.preview) {
+            element = <div id={id}>{value}</div>;
+        }
+
+        return (
+            <div className={id}>
+                <label htmlFor={id}>{label}</label>
+                {element}
+            </div>
+        );
+    };
+
+    return Component;
 };
 
-const LastName = (props) => {
-    const { mode, name, onChange } = props;
-
-    let element = (
-        <input
-            type="text"
-            id="last-name"
-            name="lastName"
-            value={name}
-            onChange={onChange}
-        />
-    );
-
-    if (mode.preview) {
-        element = <div id="last-name">{name}</div>;
-    }
-
-    return (
-        <div className="last-name">
-            <label htmlFor="last-name">Last name</label>
-            {element}
-        </div>
-    );
-};
+const Email = componentGenerator("email", "email", "E-mail");
+const FirstName = componentGenerator("text", "firstName", "First name")
+const LastName = componentGenerator("text", "lastName", "Last name")
