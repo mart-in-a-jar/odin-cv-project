@@ -1,0 +1,59 @@
+html {
+    box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
+body {
+    margin: 0;
+}
+
+#root {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+input {
+    display: block;
+}
+
+input:focus {
+    outline: 1px solid blue;
+}
+
+label ~ * {
+    height: 30px;
+    line-height: 30px;
+    width: 100%;
+}
+
+.inputs {
+    display: flex;
+    gap: 50px;
+}
+
+.text-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+}
+
+.userPhoto {
+    height: 150px;
+    width: 120px;
+}
+
+button {
+    width: 100px;
+    height: 30px;
+    background-color: rgb(106, 151, 106);
+    border: 0;
+    border-radius: 3px;
+    cursor: pointer;
+}

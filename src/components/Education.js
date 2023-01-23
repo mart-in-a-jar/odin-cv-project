@@ -2,9 +2,11 @@ import { Component } from "react";
 
 class Education extends Component {
     render() {
-        return(
-            <div>{this.props.placeHolder}</div>
-        )
+        return (
+            <section className="education">
+                <h2>Education</h2>
+            </section>
+        );
     }
 }
 
