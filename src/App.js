@@ -55,6 +55,7 @@ class App extends Component {
         this.setState((prevState) => {
             return {
                 cv: {
+                    ...prevState.cv,
                     personalia: {
                         ...prevState.cv.personalia,
                         [e.target.name]: e.target.value,
