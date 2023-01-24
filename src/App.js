@@ -3,6 +3,7 @@ import Education from "./components/Education";
 import Experience from "./components/Experience";
 import Personalia from "./components/Personalia";
 import "./styles/App.css";
+import avatar from "./img/avatar.png";
 
 class App extends Component {
     constructor(props) {
@@ -15,7 +16,7 @@ class App extends Component {
                     lastName: "",
                     email: "",
                     phone: "",
-                    photo: "",
+                    photo: avatar,
                 },
                 experience: [
                     {
@@ -52,6 +53,22 @@ class App extends Component {
     };
 
     changePersonalia = (e) => {
+        if (e.target.type === "file") {
+            const file = e.target.files[0];
+            const filePath = URL.createObjectURL(file);
+            this.setState((prevState) => {
+                return {
+                    cv: {
+                        ...prevState.cv,
+                        personalia: {
+                            ...prevState.cv.personalia,
+                            photo: filePath,
+                        },
+                    },
+                };
+            });
+            return;
+        }
         this.setState((prevState) => {
             return {
                 cv: {

@@ -24,9 +24,17 @@ class Personalia extends Component {
                             value={personalia.email}
                             onChange={onChange}
                         />
-                        <input type="text" />
+                        <PhoneNumber
+                            mode={mode}
+                            value={personalia.phone}
+                            onChange={onChange}
+                        />
                     </div>
-                    <img className="userPhoto" src="" alt="userphoto" />
+                    <PhotoInput
+                        mode={mode}
+                        onChange={onChange}
+                        value={personalia.photo}
+                    />
                 </div>
             </section>
         );
@@ -34,7 +42,6 @@ class Personalia extends Component {
 }
 
 export default Personalia;
-
 
 const componentGenerator = (type, id, label) => {
     const Component = (props) => {
@@ -47,6 +54,7 @@ const componentGenerator = (type, id, label) => {
                 name={id}
                 value={value}
                 onChange={onChange}
+                required
             />
         );
 
@@ -65,6 +73,30 @@ const componentGenerator = (type, id, label) => {
     return Component;
 };
 
+class PhotoInput extends Component {
+    render() {
+        const { mode, value, onChange } = this.props;
+        return (
+            <div className="photo">
+                <label htmlFor="photo-input">
+                    <img className="userPhoto" src={value} alt="userphoto" />
+                    {mode.preview ? null : (
+                        <figcaption>Upload photo</figcaption>
+                    )}
+                </label>
+                <input
+                    type="file"
+                    name="photo"
+                    id="photo-input"
+                    accept="image/*"
+                    onChange={onChange}
+                />
+            </div>
+        );
+    }
+}
+
+const FirstName = componentGenerator("text", "firstName", "First name");
+const LastName = componentGenerator("text", "lastName", "Last name");
 const Email = componentGenerator("email", "email", "E-mail");
-const FirstName = componentGenerator("text", "firstName", "First name")
-const LastName = componentGenerator("text", "lastName", "Last name")
+const PhoneNumber = componentGenerator("tel", "phone", "Phone number");

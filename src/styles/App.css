@@ -22,6 +22,10 @@ input {
     display: block;
 }
 
+input[type="file"] {
+    display: none;
+}
+
 input:focus {
     outline: 1px solid blue;
 }
@@ -34,19 +38,25 @@ label ~ * {
 
 .inputs {
     display: flex;
-    gap: 50px;
+    gap: 40px;
 }
 
 .text-inputs {
     display: flex;
     flex-direction: column;
     gap: 8px;
-    width: 100%;
+    width: 250px;
 }
 
 .userPhoto {
-    height: 150px;
-    width: 120px;
+    box-sizing: content-box;
+    height: 180px;
+    max-width: 180px;
+    object-fit: cover;
+    cursor: pointer;
+    border: 2px dashed rgba(163, 64, 64, 0.288);
+    border-radius: 20px;
+    padding: 5px;
 }
 
 button {
@@ -56,4 +66,8 @@ button {
     border: 0;
     border-radius: 3px;
     cursor: pointer;
+}
+
+figcaption {
+    text-align: center;
 }
