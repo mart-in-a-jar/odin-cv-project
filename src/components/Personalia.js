@@ -59,7 +59,7 @@ const componentGenerator = (type, id, label) => {
         );
 
         if (mode.preview) {
-            element = <div id={id}>{value}</div>;
+            element = <div className="preview" id={id}>{value}</div>;
         }
 
         return (
