@@ -89,7 +89,9 @@ label {
     color: rgba(39, 114, 49, 0.664);
 }
 
-.delete-experience {
+/* Experience */
+
+.add-experience {
     margin-top: 10px;
 }
 
@@ -111,6 +113,16 @@ label {
 .delete:hover {
     transform: scale(1.2);
 }
+
+select.month {
+    width: auto;
+}
+
+select.year {
+    width: auto;
+}
+
+/* CV */
 
 .clear-cv {
     background-color: rgb(219, 120, 120);

@@ -13,10 +13,14 @@ const emptyCV = {
     experience: [
         {
             id: uuid(),
-            fromMonth: 1,
-            fromYear: thisYear,
-            toMonth: 1,
-            toYear: thisYear,
+            from: {
+                month: 1,
+                year: thisYear,
+            },
+            to: {
+                month: 1,
+                year: thisYear,
+            },
             role: "",
             company: "",
             description: "",
@@ -26,12 +30,12 @@ const emptyCV = {
         {
             id: uuid(),
             from: {
-                month: "",
-                year: "",
+                month: 1,
+                year: thisYear,
             },
             to: {
-                month: "",
-                year: "",
+                month: 1,
+                year: thisYear,
             },
             degree: "",
             school: "",

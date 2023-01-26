@@ -8,6 +8,7 @@ class Month extends Component {
             <div className={name + " month"}>
                 <label htmlFor={id}>{label}</label>
                 <select
+                    className={name + " month"}
                     name={name}
                     id={id}
                     defaultValue={value}
@@ -43,6 +44,7 @@ class Year extends Component {
             <div className={name + " year"}>
                 <label htmlFor={id}>{label}</label>
                 <select
+                    className={name + " year"}
                     name={name}
                     id={id}
                     defaultValue={value}

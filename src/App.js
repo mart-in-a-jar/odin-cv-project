@@ -80,18 +80,51 @@ class App extends Component {
 
     changeExperience = (e, id) => {
         this.setState((prevState) => {
-            const newExperience = prevState.cv.experience.map((experience) => {
-                if (experience.id === id) {
-                    experience = {
-                        ...experience,
-                        [e.target.name]:
-                            e.target.dataset.type === "number"
-                                ? +e.target.value
-                                : e.target.value,
-                    };
-                }
-                return experience;
-            });
+            let newExperience;
+            const exceptions = ["fromMonth", "fromYear", "toMonth", "toYear"];
+            if (exceptions.includes(e.target.name)) {
+                newExperience = prevState.cv.experience.map((experience) => {
+                    if (experience.id === id) {
+                        if (e.target.name.startsWith("from")) {
+                            let from = {
+                                ...experience.from,
+                                [e.target.name === "fromMonth"
+                                    ? "month"
+                                    : "year"]: +e.target.value,
+                            };
+                            experience = {
+                                ...experience,
+                                from: from,
+                            };
+                        } else if (e.target.name.startsWith("to")) {
+                            let to = {
+                                ...experience.to,
+                                [e.target.name === "toMonth"
+                                    ? "month"
+                                    : "year"]: +e.target.value,
+                            };
+                            experience = {
+                                ...experience,
+                                to: to,
+                            };
+                        }
+                    }
+                    return experience;
+                });
+            } else {
+                newExperience = prevState.cv.experience.map((experience) => {
+                    if (experience.id === id) {
+                        experience = {
+                            ...experience,
+                            [e.target.name]:
+                                e.target.dataset.type === "number"
+                                    ? +e.target.value
+                                    : e.target.value,
+                        };
+                    }
+                    return experience;
+                });
+            }
             return {
                 cv: {
                     ...prevState.cv,
@@ -113,10 +146,14 @@ class App extends Component {
                         ...prevState.cv.experience,
                         {
                             id: uuid(),
-                            fromMonth: 1,
-                            fromYear: thisYear,
-                            toMonth: 1,
-                            toYear: thisYear,
+                            from: {
+                                month: 1,
+                                year: thisYear,
+                            },
+                            to: {
+                                month: 1,
+                                year: thisYear,
+                            },
                             role: "",
                             company: "",
                             description: "",

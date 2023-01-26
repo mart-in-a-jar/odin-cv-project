@@ -19,7 +19,7 @@ class Experiences extends Component {
                         />
                     );
                 })}
-                <button className="delete-experience" onClick={onAdd}>
+                <button className="add-experience" onClick={onAdd}>
                     Add
                 </button>
             </section>
@@ -35,20 +35,21 @@ class Experience extends Component {
         return (
             <div className="inputs experience">
                 <div className="text-inputs">
+                    From
                     <Month
                         id={`from-month-experience-${experience.id}`}
                         name="fromMonth"
                         label="Month"
-                        value={experience.fromMonth}
+                        value={experience.from.month}
                         onChange={(e) => {
                             onChange(e, experience.id);
                         }}
                     />
                     <Year
-                        id="year"
+                        id={`from-year-experience-${experience.id}`}
                         name="fromYear"
                         label="Year"
-                        value={experience.fromYear}
+                        value={experience.from.year}
                         onChange={(e) => {
                             onChange(e, experience.id);
                         }}
