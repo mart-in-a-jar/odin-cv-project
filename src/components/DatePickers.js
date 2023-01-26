@@ -36,10 +36,6 @@ class Year extends Component {
         for (let i = 0; i < 100; i++) {
             years.push(thisYear - i);
         }
-        if (name.includes("to")) {
-            years.unshift("Present");
-        }
-
         return (
             <div className={name + " year"}>
                 <label htmlFor={id}>{label}</label>

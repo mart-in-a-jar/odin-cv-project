@@ -30,7 +30,7 @@ input:focus {
     outline: 1px solid blue;
 }
 
-label ~ * {
+label ~ input {
     height: 30px;
     line-height: 30px;
     width: 100%;
@@ -120,6 +120,28 @@ select.month {
 
 select.year {
     width: auto;
+}
+
+div.month,
+div.year {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-right: 3px;
+}
+
+div.year {
+    margin-right: 40px;
+}
+
+.durations {
+    display: flex;
+    /* gap: 20px; */
+    align-items: center;
+}
+
+.durations .label {
+    margin-right: 10px;
 }
 
 /* CV */
