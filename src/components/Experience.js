@@ -1,9 +1,9 @@
 import { Component } from "react";
-import { Month, Year } from "./DatePickers";
+import Durations from "./DatePickers";
 
 class Experiences extends Component {
     render() {
-        const { experience, onChange, onAdd, onRemove } = this.props;
+        const { experience, onChange, onAdd, onRemove, mode } = this.props;
 
         return (
             // Map all experiences
@@ -16,6 +16,7 @@ class Experiences extends Component {
                             experience={experience}
                             onChange={onChange}
                             onRemove={onRemove}
+                            mode={mode}
                         />
                     );
                 })}
@@ -31,57 +32,21 @@ export default Experiences;
 
 class Experience extends Component {
     render() {
-        const { experience, onChange, onRemove } = this.props;
+        const { experience, onChange, onRemove, mode } = this.props;
         return (
             <div className="inputs experience">
-                <div className="text-inputs">
-                    <div className="durations">
-                        <div className="label">From</div>
-                        <Month
-                            id={`from-month-experience-${experience.id}`}
-                            name="fromMonth"
-                            label="Month"
-                            value={experience.from.month}
-                            onChange={(e) => {
-                                onChange(e, experience.id);
-                            }}
-                        />
-                        <Year
-                            id={`from-year-experience-${experience.id}`}
-                            name="fromYear"
-                            label="Year"
-                            value={experience.from.year}
-                            onChange={(e) => {
-                                onChange(e, experience.id);
-                            }}
-                        />
-                        <div className="label">To</div>
-                        <Month
-                            id={`to-month-experience-${experience.id}`}
-                            name="toMonth"
-                            label="Month"
-                            value={experience.to.month}
-                            onChange={(e) => {
-                                onChange(e, experience.id);
-                            }}
-                        />
-                        <Year
-                            id={`to-year-experience-${experience.id}`}
-                            name="toYear"
-                            label="Year"
-                            value={experience.to.year}
-                            onChange={(e) => {
-                                onChange(e, experience.id);
-                            }}
-                        />
-                    </div>
-                    <label htmlFor="">Role</label>
-                    <input type="text" />
-                    <label htmlFor="">Company</label>
-                    <input type="text" />
-                    <label htmlFor="">Description</label>
-                    <textarea name="" id="" cols="30" rows="4"></textarea>
-                </div>
+                <Durations
+                    experience={experience}
+                    onChange={onChange}
+                    mode={mode}
+                />
+                {/* create components for these */}
+                {/* <label htmlFor="">Role</label>
+                <input type="text" />
+                <label htmlFor="">Company</label>
+                <input type="text" />
+                <label htmlFor="">Description</label>
+                <textarea name="" id="" cols="30" rows="4"></textarea> */}
                 <span
                     className="delete"
                     onClick={(e) => {

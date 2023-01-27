@@ -111,6 +111,16 @@ class App extends Component {
                     }
                     return experience;
                 });
+            } else if (e.target.type === "checkbox") {
+                newExperience = prevState.cv.experience.map((experience) => {
+                    if (experience.id === id) {
+                        experience = {
+                            ...experience,
+                            [e.target.name]: e.target.checked,
+                        };
+                    }
+                    return experience;
+                });
             } else {
                 newExperience = prevState.cv.experience.map((experience) => {
                     if (experience.id === id) {
@@ -157,6 +167,7 @@ class App extends Component {
                             role: "",
                             company: "",
                             description: "",
+                            currentPosition: false,
                         },
                     ],
                 },
@@ -221,12 +232,13 @@ class App extends Component {
                         onChange={this.changeExperience}
                         onAdd={this.addExperience}
                         onRemove={this.removeExperience}
+                        mode={mode}
                     />
                     <Education />
                 </form>
                 <button
                     onClick={() => {
-                        console.log(this.state.cv);
+                        console.log(this.state.cv.experience);
                     }}
                 >
                     PRINT

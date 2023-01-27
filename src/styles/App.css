@@ -30,7 +30,10 @@ input:focus {
     outline: 1px solid blue;
 }
 
-label ~ input {
+label ~ input[type="text"],
+label ~ input[type="tel"],
+label ~ input[type="email"],
+label ~ .preview {
     height: 30px;
     line-height: 30px;
     width: 100%;
@@ -74,11 +77,11 @@ figcaption {
     text-align: center;
 }
 
-.preview {
+.personalia .preview {
     font-size: 1.3rem;
 }
 
-.preview::before {
+.personalia .preview::before {
     content: "";
     border-top: 1px solid black;
     width: 60%;
@@ -134,14 +137,48 @@ div.year {
     margin-right: 40px;
 }
 
-.durations {
+.durations,
+.from,
+.to,
+.to .inner-inner {
     display: flex;
-    /* gap: 20px; */
+}
+
+.current-pos {
+    display: flex;
     align-items: center;
+    margin-top: 3px;
+}
+
+.current-pos input {
+    margin-left: 0;
 }
 
 .durations .label {
     margin-right: 10px;
+    transform: translateY(10px);
+}
+
+.durations label {
+    font-size: 0.8rem;
+}
+
+.current-pos label {
+    font-size: 0.9rem;
+}
+
+.inputs.experience {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.preview div.year {
+    margin-right: unset;
+}
+
+.durations.preview {
+    gap: 8px;
 }
 
 /* CV */

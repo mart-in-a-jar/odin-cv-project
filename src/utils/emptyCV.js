@@ -24,6 +24,7 @@ const emptyCV = {
             role: "",
             company: "",
             description: "",
+            currentPosition: false,
         },
     ],
     education: [
