@@ -44,13 +44,30 @@ class Experience extends Component {
                     type="experience"
                     presentOption
                 />
-                {/* create components for these */}
-                {/* <label htmlFor="">Role</label>
-                <input type="text" />
-                <label htmlFor="">Company</label>
-                <input type="text" />
-                <label htmlFor="">Description</label>
-                <textarea name="" id="" cols="30" rows="4"></textarea> */}
+                <TextInput
+                    name="role"
+                    label="Role"
+                    value={experience.role}
+                    onChange={onChange}
+                    mode={mode}
+                    id={experience.id}
+                />
+                <TextInput
+                    name="company"
+                    label="Company"
+                    value={experience.company}
+                    onChange={onChange}
+                    mode={mode}
+                    id={experience.id}
+                />
+                <TextArea
+                    name="description"
+                    label="Description"
+                    value={experience.description}
+                    onChange={onChange}
+                    mode={mode}
+                    id={experience.id}
+                />
                 {mode.preview ? null : (
                     <span
                         className="delete"
@@ -60,6 +77,60 @@ class Experience extends Component {
                     >
                         &times;
                     </span>
+                )}
+            </div>
+        );
+    }
+}
+
+class TextInput extends Component {
+    render() {
+        const { value, onChange, mode, name, label } = this.props;
+        const id = `${name}-${this.props.id}`;
+        return (
+            <div className={name}>
+                <label htmlFor={id}>{label}</label>
+                {mode.preview ? (
+                    <div id={id} className="preview">
+                        {value}
+                    </div>
+                ) : (
+                    <input
+                        id={id}
+                        name={name}
+                        type="text"
+                        value={value}
+                        onChange={(e) => {
+                            onChange(e, this.props.id);
+                        }}
+                        maxLength={100}
+                    />
+                )}
+            </div>
+        );
+    }
+}
+
+class TextArea extends Component {
+    render() {
+        const { value, onChange, mode, name, label } = this.props;
+        const id = `${name}-${this.props.id}`;
+        return (
+            <div className={name}>
+                <label htmlFor={id}>{label}</label>
+                {mode.preview ? (
+                    <div id={id} className="preview">
+                        {value}
+                    </div>
+                ) : (
+                    <textarea
+                        name={name}
+                        id={id}
+                        value={value}
+                        onChange={(e) => {
+                            onChange(e, this.props.id);
+                        }}
+                    />
                 )}
             </div>
         );

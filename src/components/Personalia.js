@@ -55,6 +55,7 @@ const componentGenerator = (type, id, label) => {
                 value={value}
                 onChange={onChange}
                 required
+                maxLength={100}
             />
         );
 
