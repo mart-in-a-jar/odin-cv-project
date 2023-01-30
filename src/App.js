@@ -191,16 +191,125 @@ class App extends Component {
         });
     };
 
+    changeEducation = (e, id) => {
+        this.setState((prevState) => {
+            let newEducation;
+            const exceptions = ["fromMonth", "fromYear", "toMonth", "toYear"];
+            if (exceptions.includes(e.target.name)) {
+                newEducation = prevState.cv.education.map((education) => {
+                    if (education.id === id) {
+                        if (e.target.name.startsWith("from")) {
+                            let from = {
+                                ...education.from,
+                                [e.target.name === "fromMonth"
+                                    ? "month"
+                                    : "year"]: +e.target.value,
+                            };
+                            education = {
+                                ...education,
+                                from: from,
+                            };
+                        } else if (e.target.name.startsWith("to")) {
+                            let to = {
+                                ...education.to,
+                                [e.target.name === "toMonth"
+                                    ? "month"
+                                    : "year"]: +e.target.value,
+                            };
+                            education = {
+                                ...education,
+                                to: to,
+                            };
+                        }
+                    }
+                    return education;
+                });
+            } else if (e.target.type === "checkbox") {
+                newEducation = prevState.cv.education.map((education) => {
+                    if (education.id === id) {
+                        education = {
+                            ...education,
+                            [e.target.name]: e.target.checked,
+                        };
+                    }
+                    return education;
+                });
+            } else {
+                newEducation = prevState.cv.education.map((education) => {
+                    if (education.id === id) {
+                        education = {
+                            ...education,
+                            [e.target.name]:
+                                e.target.dataset.type === "number"
+                                    ? +e.target.value
+                                    : e.target.value,
+                        };
+                    }
+                    return education;
+                });
+            }
+            return {
+                cv: {
+                    ...prevState.cv,
+                    education: newEducation,
+                },
+            };
+        });
+    };
+
+    addEducation = (e) => {
+        e.preventDefault();
+        const thisYear = new Date().getFullYear();
+
+        this.setState((prevState) => {
+            return {
+                cv: {
+                    ...prevState.cv,
+                    education: [
+                        ...prevState.cv.education,
+                        {
+                            id: uuid(),
+                            from: {
+                                month: 1,
+                                year: thisYear,
+                            },
+                            to: {
+                                month: 1,
+                                year: thisYear,
+                            },
+                            degree: "",
+                            school: "",
+                        },
+                    ],
+                },
+            };
+        });
+    };
+
+    removeEducation = (e, id) => {
+        this.setState((prevState) => {
+            const newEducation = prevState.cv.education.filter((education) => {
+                return education.id !== id;
+            });
+            return {
+                cv: {
+                    ...prevState.cv,
+                    education: newEducation,
+                },
+            };
+        });
+    };
+
     sortExperienceAndEducation() {
         this.setState((prevState) => {
             const sortedExperience = prevState.cv.experience.sort(
                 (current, last) => {
-                    return +current.from > +last.from;
+                    return +current.from.year < +last.from.year;
                 }
             );
             const sortedEducation = prevState.cv.education.sort(
                 (current, last) => {
-                    return +current.from > +last.from;
+                    return +current.from.year < +last.from.year;
                 }
             );
             return {
@@ -234,16 +343,15 @@ class App extends Component {
                         onRemove={this.removeExperience}
                         mode={mode}
                     />
-                    <Education education={cv.education} mode={mode} />
+                    <Education
+                        education={cv.education}
+                        mode={mode}
+                        onChange={this.changeEducation}
+                        onAdd={this.addEducation}
+                        onRemove={this.removeEducation}
+                    />
                 </form>
-                <button
-                    onClick={() => {
-                        console.log(this.state.cv.experience);
-                    }}
-                >
-                    PRINT
-                </button>
-                <button type="submit" onClick={this.togglePreview}>
+                <button className={mode.preview ? "edit" : ""} type="submit" onClick={this.togglePreview}>
                     {mode.preview ? "Edit" : "Preview"}
                 </button>
                 {mode.preview ? null : (

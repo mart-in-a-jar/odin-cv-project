@@ -2,7 +2,7 @@ import { Component } from "react";
 
 class Durations extends Component {
     render() {
-        const { experience, onChange, mode, type, presentOption } = this.props;
+        const { experience, onChange, mode, type, presentJobOption } = this.props;
         let to = (
             <div className="to">
                 {mode.preview ? null : <div className="label">To</div>}
@@ -31,7 +31,7 @@ class Durations extends Component {
                             mode={mode}
                         />
                     </div>
-                    {presentOption ? (
+                    {presentJobOption ? (
                         mode.preview ? null : (
                             <CurrentPositionToggle
                                 id={experience.id}

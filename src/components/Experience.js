@@ -7,7 +7,7 @@ class Experiences extends Component {
 
         return (
             <section className="experiences">
-                <h2>Experience</h2>
+                <h1>Experience</h1>
                 {experience.map((experience) => {
                     return (
                         <Experience
@@ -41,7 +41,7 @@ class Experience extends Component {
                     onChange={onChange}
                     mode={mode}
                     type="experience"
-                    presentOption
+                    presentJobOption
                 />
                 <TextInput
                     name="role"
@@ -135,3 +135,5 @@ class TextArea extends Component {
         );
     }
 }
+
+export {TextInput}

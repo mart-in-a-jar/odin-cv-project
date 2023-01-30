@@ -6,7 +6,7 @@ class Personalia extends Component {
 
         return (
             <section className="personalia">
-                <h2>Personal info</h2>
+                <h1>Personal info</h1>
                 <div className="inputs">
                     <div className="text-inputs">
                         <FirstName

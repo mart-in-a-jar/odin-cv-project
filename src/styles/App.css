@@ -9,7 +9,7 @@ html {
 }
 
 body {
-    margin: 0;
+    margin: 0 30px 60px 30px;
 }
 
 #root {
@@ -109,10 +109,6 @@ label {
     margin-top: 10px;
 }
 
-.experience:not(:last-of-type) {
-    margin-bottom: 20px;
-}
-
 .delete {
     position: absolute;
     top: 0px;
@@ -178,16 +174,19 @@ div.year {
     font-size: 0.9rem;
 }
 
-.inputs.experience {
+.inputs.experience,
+.inputs.education {
     display: flex;
     flex-direction: column;
     gap: 8px;
     width: 500px;
 }
 
-.inputs.experience:not(:last-of-type) {
+.experience:not(:last-of-type),
+.education:not(:last-of-type) {
     padding-bottom: 25px;
     border-bottom: 3px dashed black;
+    margin-bottom: 20px;
 }
 
 .preview div.year {
@@ -202,10 +201,19 @@ div.year {
 
 /* CV */
 
-.clear-cv {
+.clear-cv,
+button.edit {
     background-color: rgb(219, 120, 120);
+}
+
+.clear-cv {
+    margin-left: 10px;
 }
 
 section {
     margin-bottom: 30px;
+}
+
+h1 {
+    font-size: 2rem;
 }
