@@ -205,3 +205,7 @@ div.year {
 .clear-cv {
     background-color: rgb(219, 120, 120);
 }
+
+section {
+    margin-bottom: 30px;
+}

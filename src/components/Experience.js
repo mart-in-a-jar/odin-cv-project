@@ -6,7 +6,6 @@ class Experiences extends Component {
         const { experience, onChange, onAdd, onRemove, mode } = this.props;
 
         return (
-            // Map all experiences
             <section className="experiences">
                 <h2>Experience</h2>
                 {experience.map((experience) => {

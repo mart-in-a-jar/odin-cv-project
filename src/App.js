@@ -234,7 +234,7 @@ class App extends Component {
                         onRemove={this.removeExperience}
                         mode={mode}
                     />
-                    <Education />
+                    <Education education={cv.education} mode={mode} />
                 </form>
                 <button
                     onClick={() => {
