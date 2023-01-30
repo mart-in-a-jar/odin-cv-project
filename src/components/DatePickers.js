@@ -2,14 +2,14 @@ import { Component } from "react";
 
 class Durations extends Component {
     render() {
-        const { experience, onChange, mode } = this.props;
+        const { experience, onChange, mode, type, presentOption } = this.props;
         let to = (
             <div className="to">
                 {mode.preview ? null : <div className="label">To</div>}
                 <div className="inner">
                     <div className="inner-inner">
                         <Month
-                            id={`to-month-experience-${experience.id}`}
+                            id={`to-month-${type}-${experience.id}`}
                             name="toMonth"
                             label="Month"
                             value={experience.to.month}
@@ -20,7 +20,7 @@ class Durations extends Component {
                             mode={mode}
                         />
                         <Year
-                            id={`to-year-experience-${experience.id}`}
+                            id={`to-year-${type}-${experience.id}`}
                             name="toYear"
                             label="Year"
                             value={experience.to.year}
@@ -31,13 +31,15 @@ class Durations extends Component {
                             mode={mode}
                         />
                     </div>
-                    {mode.preview ? null : (
-                        <CurrentPositionToggle
-                            id={experience.id}
-                            currentPos={experience.currentPosition}
-                            onChange={onChange}
-                        />
-                    )}
+                    {presentOption ? (
+                        mode.preview ? null : (
+                            <CurrentPositionToggle
+                                id={experience.id}
+                                currentPos={experience.currentPosition}
+                                onChange={onChange}
+                            />
+                        )
+                    ) : null}
                 </div>
             </div>
         );
@@ -53,7 +55,7 @@ class Durations extends Component {
                 <div className="from">
                     {mode.preview ? "" : <div className="label">From</div>}
                     <Month
-                        id={`from-month-experience-${experience.id}`}
+                        id={`from-month-${type}-${experience.id}`}
                         name="fromMonth"
                         label="Month"
                         value={experience.from.month}
@@ -63,7 +65,7 @@ class Durations extends Component {
                         mode={mode}
                     />
                     <Year
-                        id={`from-year-experience-${experience.id}`}
+                        id={`from-year-${type}-${experience.id}`}
                         name="fromYear"
                         label="Year"
                         value={experience.from.year}

@@ -41,6 +41,8 @@ class Experience extends Component {
                     experience={experience}
                     onChange={onChange}
                     mode={mode}
+                    type="experience"
+                    presentOption
                 />
                 {/* create components for these */}
                 {/* <label htmlFor="">Role</label>
