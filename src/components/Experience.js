@@ -20,9 +20,11 @@ class Experiences extends Component {
                         />
                     );
                 })}
-                <button className="add-experience" onClick={onAdd}>
-                    Add
-                </button>
+                {mode.preview ? null : (
+                    <button className="add-experience" onClick={onAdd}>
+                        Add
+                    </button>
+                )}
             </section>
         );
     }
@@ -47,14 +49,16 @@ class Experience extends Component {
                 <input type="text" />
                 <label htmlFor="">Description</label>
                 <textarea name="" id="" cols="30" rows="4"></textarea> */}
-                <span
-                    className="delete"
-                    onClick={(e) => {
-                        onRemove(e, experience.id);
-                    }}
-                >
-                    &times;
-                </span>
+                {mode.preview ? null : (
+                    <span
+                        className="delete"
+                        onClick={(e) => {
+                            onRemove(e, experience.id);
+                        }}
+                    >
+                        &times;
+                    </span>
+                )}
             </div>
         );
     }

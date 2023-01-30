@@ -246,9 +246,11 @@ class App extends Component {
                 <button type="submit" onClick={this.togglePreview}>
                     {mode.preview ? "Edit" : "Preview"}
                 </button>
-                <button className="clear-cv" onClick={this.clearCV}>
-                    Reset
-                </button>
+                {mode.preview ? null : (
+                    <button className="clear-cv" onClick={this.clearCV}>
+                        Reset
+                    </button>
+                )}
             </div>
         );
     }
