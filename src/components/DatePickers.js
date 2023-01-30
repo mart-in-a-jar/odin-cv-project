@@ -32,20 +32,11 @@ class Durations extends Component {
                         />
                     </div>
                     {mode.preview ? null : (
-                        <div className="current-pos">
-                            <input
-                                type="checkbox"
-                                name="currentPosition"
-                                id={`currentPosition-${experience.id}`}
-                                checked={experience.currentPosition}
-                                onChange={(e) => {
-                                    onChange(e, experience.id);
-                                }}
-                            />
-                            <label htmlFor={`currentPosition-${experience.id}`}>
-                                Still work here
-                            </label>
-                        </div>
+                        <CurrentPositionToggle
+                            id={experience.id}
+                            currentPos={experience.currentPosition}
+                            onChange={onChange}
+                        />
                     )}
                 </div>
             </div>
@@ -172,6 +163,26 @@ class Year extends Component {
             );
         }
         return element;
+    }
+}
+
+class CurrentPositionToggle extends Component {
+    render() {
+        const { id, currentPos, onChange } = this.props;
+        return (
+            <div className="current-pos">
+                <input
+                    type="checkbox"
+                    name="currentPosition"
+                    id={`currentPosition-${id}`}
+                    checked={currentPos}
+                    onChange={(e) => {
+                        onChange(e, id);
+                    }}
+                />
+                <label htmlFor={`currentPosition-${id}`}>Still work here</label>
+            </div>
+        );
     }
 }
 
