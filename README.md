@@ -1,6 +1,6 @@
 # CV application
 
-### [Live preview]()
+### [Live preview](https://mart-in-a-jar.github.io/odin-cv-project/)
 <br>
 
 React training  
