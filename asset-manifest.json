@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/odin-cv-project/static/css/main.4d972c17.css",
+    "main.js": "/odin-cv-project/static/js/main.33e3a737.js",
+    "static/media/avatar.png": "/odin-cv-project/static/media/avatar.a6143582309785dca610.png",
+    "index.html": "/odin-cv-project/index.html",
+    "main.4d972c17.css.map": "/odin-cv-project/static/css/main.4d972c17.css.map",
+    "main.33e3a737.js.map": "/odin-cv-project/static/js/main.33e3a737.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.4d972c17.css",
+    "static/js/main.33e3a737.js"
+  ]
+}
