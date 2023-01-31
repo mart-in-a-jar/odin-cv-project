@@ -58,14 +58,16 @@ class EducationElement extends Component {
                     mode={mode}
                     id={education.id}
                 />
-                <span
-                    className="delete"
-                    onClick={(e) => {
-                        onRemove(e, education.id);
-                    }}
-                >
-                    &times;
-                </span>
+                {mode.preview ? null : (
+                    <span
+                        className="delete"
+                        onClick={(e) => {
+                            onRemove(e, education.id);
+                        }}
+                    >
+                        &times;
+                    </span>
+                )}
             </div>
         );
     }
