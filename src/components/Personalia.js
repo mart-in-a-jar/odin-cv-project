@@ -1,52 +1,44 @@
-import { Component } from "react";
-
-class Personalia extends Component {
-    render() {
-        const { mode, personalia, onChange } = this.props;
-
-        return (
-            <section className="personalia">
-                <h1>Personal info</h1>
-                <div className="inputs">
-                    <div className="text-inputs">
-                        <FirstName
-                            mode={mode}
-                            value={personalia.firstName}
-                            onChange={onChange}
-                        />
-                        <LastName
-                            mode={mode}
-                            value={personalia.lastName}
-                            onChange={onChange}
-                        />
-                        <Email
-                            mode={mode}
-                            value={personalia.email}
-                            onChange={onChange}
-                        />
-                        <PhoneNumber
-                            mode={mode}
-                            value={personalia.phone}
-                            onChange={onChange}
-                        />
-                    </div>
-                    <PhotoInput
+const Personalia = ({ mode, personalia, onChange }) => {
+    return (
+        <section className="personalia">
+            <h1>Personal info</h1>
+            <div className="inputs">
+                <div className="text-inputs">
+                    <FirstName
                         mode={mode}
+                        value={personalia.firstName}
                         onChange={onChange}
-                        value={personalia.photo}
+                    />
+                    <LastName
+                        mode={mode}
+                        value={personalia.lastName}
+                        onChange={onChange}
+                    />
+                    <Email
+                        mode={mode}
+                        value={personalia.email}
+                        onChange={onChange}
+                    />
+                    <PhoneNumber
+                        mode={mode}
+                        value={personalia.phone}
+                        onChange={onChange}
                     />
                 </div>
-            </section>
-        );
-    }
-}
+                <PhotoInput
+                    mode={mode}
+                    onChange={onChange}
+                    value={personalia.photo}
+                />
+            </div>
+        </section>
+    );
+};
 
 export default Personalia;
 
 const componentGenerator = (type, id, label) => {
-    const Component = (props) => {
-        const { mode, value, onChange } = props;
-
+    const Component = ({ mode, value, onChange }) => {
         let element = (
             <input
                 type={type}
@@ -60,7 +52,11 @@ const componentGenerator = (type, id, label) => {
         );
 
         if (mode.preview) {
-            element = <div className="preview" id={id}>{value}</div>;
+            element = (
+                <div className="preview" id={id}>
+                    {value}
+                </div>
+            );
         }
 
         return (
@@ -74,28 +70,23 @@ const componentGenerator = (type, id, label) => {
     return Component;
 };
 
-class PhotoInput extends Component {
-    render() {
-        const { mode, value, onChange } = this.props;
-        return (
-            <div className="photo">
-                <label htmlFor="photo-input">
-                    <img className="userPhoto" src={value} alt="userphoto" />
-                    {mode.preview ? null : (
-                        <figcaption>Upload photo</figcaption>
-                    )}
-                </label>
-                <input
-                    type="file"
-                    name="photo"
-                    id="photo-input"
-                    accept="image/*"
-                    onChange={onChange}
-                />
-            </div>
-        );
-    }
-}
+const PhotoInput = ({ mode, value, onChange }) => {
+    return (
+        <div className="photo">
+            <label htmlFor="photo-input">
+                <img className="userPhoto" src={value} alt="userphoto" />
+                {mode.preview ? null : <figcaption>Upload photo</figcaption>}
+            </label>
+            <input
+                type="file"
+                name="photo"
+                id="photo-input"
+                accept="image/*"
+                onChange={onChange}
+            />
+        </div>
+    );
+};
 
 const FirstName = componentGenerator("text", "firstName", "First name");
 const LastName = componentGenerator("text", "lastName", "Last name");

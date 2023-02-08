@@ -1,4 +1,4 @@
-import { Component } from "react";
+import { useState, useEffect } from "react";
 import Education from "./components/Education";
 import Experiences from "./components/Experience";
 import Personalia from "./components/Personalia";
@@ -6,84 +6,75 @@ import "./styles/App.css";
 import emptyCV from "./utils/emptyCV";
 import { v4 as uuid } from "uuid";
 
-class App extends Component {
-    constructor(props) {
-        super(props);
+const App = () => {
+    const [cv, setCv] = useState(
+        JSON.parse(localStorage.getItem("cv")) || emptyCV
+    );
 
-        this.state = JSON.parse(localStorage.getItem("state")) || {
-            cv: emptyCV,
-            mode: {
-                preview: false,
-            },
-        };
-    }
+    const [mode, setMode] = useState(
+        JSON.parse(localStorage.getItem("mode")) || { preview: false }
+    );
 
     // Add dummy image, because we are not storing image in localstorage
-    componentDidMount() {
-        this.setState((prevState) => {
+    useEffect(() => {
+        setCv((prevState) => {
             return {
-                cv: {
-                    ...prevState.cv,
-                    personalia: {
-                        ...prevState.cv.personalia,
-                        photo: emptyCV.personalia.photo,
-                    },
+                ...prevState,
+                personalia: {
+                    ...prevState.personalia,
+                    photo: emptyCV.personalia.photo,
                 },
             };
         });
-    }
+    }, []);
 
-    componentDidUpdate() {
-        localStorage.setItem("state", JSON.stringify(this.state));
-    }
+    // write to localStorage
+    useEffect(() => {
+        localStorage.setItem("cv", JSON.stringify(cv));
+    }, [cv]);
 
-    togglePreview = () => {
-        this.sortExperienceAndEducation();
-        this.setState((prevState) => {
-            return {
-                mode: {
-                    preview: !prevState.mode.preview,
-                },
-            };
-        });
+    useEffect(() => {
+        localStorage.setItem("mode", JSON.stringify(mode));
+    }, [mode]);
+
+    const togglePreview = () => {
+        sortExperienceAndEducation();
+        setMode({ preview: !mode.preview });
     };
 
-    changePersonalia = (e) => {
+    const changePersonalia = (e) => {
         if (e.target.type === "file") {
             const file = e.target.files[0];
             const filePath = URL.createObjectURL(file);
-            this.setState((prevState) => {
+            setCv((prevState) => {
                 return {
-                    cv: {
-                        ...prevState.cv,
-                        personalia: {
-                            ...prevState.cv.personalia,
-                            photo: filePath,
-                        },
+                    ...prevState,
+                    personalia: {
+                        ...prevState.personalia,
+                        photo: filePath,
                     },
                 };
             });
             return;
         }
-        this.setState((prevState) => {
+
+        setCv((prevState) => {
             return {
-                cv: {
-                    ...prevState.cv,
-                    personalia: {
-                        ...prevState.cv.personalia,
-                        [e.target.name]: e.target.value,
-                    },
+                ...prevState,
+                personalia: {
+                    ...prevState.personalia,
+                    [e.target.name]: e.target.value,
                 },
             };
         });
     };
 
-    changeExperience = (e, id) => {
-        this.setState((prevState) => {
+    const changeExperience = (e, id) => {
+        setCv((prevState) => {
             let newExperience;
             const exceptions = ["fromMonth", "fromYear", "toMonth", "toYear"];
             if (exceptions.includes(e.target.name)) {
-                newExperience = prevState.cv.experience.map((experience) => {
+                newExperience = prevState.experience.map((experience) => {
                     if (experience.id === id) {
                         if (e.target.name.startsWith("from")) {
                             let from = {
@@ -112,7 +103,7 @@ class App extends Component {
                     return experience;
                 });
             } else if (e.target.type === "checkbox") {
-                newExperience = prevState.cv.experience.map((experience) => {
+                newExperience = prevState.experience.map((experience) => {
                     if (experience.id === id) {
                         experience = {
                             ...experience,
@@ -122,7 +113,7 @@ class App extends Component {
                     return experience;
                 });
             } else {
-                newExperience = prevState.cv.experience.map((experience) => {
+                newExperience = prevState.experience.map((experience) => {
                     if (experience.id === id) {
                         experience = {
                             ...experience,
@@ -136,67 +127,59 @@ class App extends Component {
                 });
             }
             return {
-                cv: {
-                    ...prevState.cv,
-                    experience: newExperience,
-                },
+                ...prevState,
+                experience: newExperience,
             };
         });
     };
 
-    addExperience = (e) => {
+    const addExperience = (e) => {
         e.preventDefault();
         const thisYear = new Date().getFullYear();
 
-        this.setState((prevState) => {
+        setCv((prevState) => {
             return {
-                cv: {
-                    ...prevState.cv,
-                    experience: [
-                        ...prevState.cv.experience,
-                        {
-                            id: uuid(),
-                            from: {
-                                month: 1,
-                                year: thisYear,
-                            },
-                            to: {
-                                month: 1,
-                                year: thisYear,
-                            },
-                            role: "",
-                            company: "",
-                            description: "",
-                            currentPosition: false,
+                ...prevState,
+                experience: [
+                    ...prevState.experience,
+                    {
+                        id: uuid(),
+                        from: {
+                            month: 1,
+                            year: thisYear,
                         },
-                    ],
-                },
+                        to: {
+                            month: 1,
+                            year: thisYear,
+                        },
+                        role: "",
+                        company: "",
+                        description: "",
+                        currentPosition: false,
+                    },
+                ],
             };
         });
     };
 
-    removeExperience = (e, id) => {
-        this.setState((prevState) => {
-            const newExperience = prevState.cv.experience.filter(
-                (experience) => {
-                    return experience.id !== id;
-                }
-            );
+    const removeExperience = (e, id) => {
+        setCv((prevState) => {
+            const newExperience = prevState.experience.filter((experience) => {
+                return experience.id !== id;
+            });
             return {
-                cv: {
-                    ...prevState.cv,
-                    experience: newExperience,
-                },
+                ...prevState,
+                experience: newExperience,
             };
         });
     };
 
-    changeEducation = (e, id) => {
-        this.setState((prevState) => {
+    const changeEducation = (e, id) => {
+        setCv((prevState) => {
             let newEducation;
             const exceptions = ["fromMonth", "fromYear", "toMonth", "toYear"];
             if (exceptions.includes(e.target.name)) {
-                newEducation = prevState.cv.education.map((education) => {
+                newEducation = prevState.education.map((education) => {
                     if (education.id === id) {
                         if (e.target.name.startsWith("from")) {
                             let from = {
@@ -225,7 +208,7 @@ class App extends Component {
                     return education;
                 });
             } else if (e.target.type === "checkbox") {
-                newEducation = prevState.cv.education.map((education) => {
+                newEducation = prevState.education.map((education) => {
                     if (education.id === id) {
                         education = {
                             ...education,
@@ -235,7 +218,7 @@ class App extends Component {
                     return education;
                 });
             } else {
-                newEducation = prevState.cv.education.map((education) => {
+                newEducation = prevState.education.map((education) => {
                     if (education.id === id) {
                         education = {
                             ...education,
@@ -249,119 +232,112 @@ class App extends Component {
                 });
             }
             return {
-                cv: {
-                    ...prevState.cv,
-                    education: newEducation,
-                },
+                ...prevState,
+                education: newEducation,
             };
         });
     };
 
-    addEducation = (e) => {
+    const addEducation = (e) => {
         e.preventDefault();
         const thisYear = new Date().getFullYear();
 
-        this.setState((prevState) => {
+        setCv((prevState) => {
             return {
-                cv: {
-                    ...prevState.cv,
-                    education: [
-                        ...prevState.cv.education,
-                        {
-                            id: uuid(),
-                            from: {
-                                month: 1,
-                                year: thisYear,
-                            },
-                            to: {
-                                month: 1,
-                                year: thisYear,
-                            },
-                            degree: "",
-                            school: "",
+                ...prevState,
+                education: [
+                    ...prevState.education,
+                    {
+                        id: uuid(),
+                        from: {
+                            month: 1,
+                            year: thisYear,
                         },
-                    ],
-                },
+                        to: {
+                            month: 1,
+                            year: thisYear,
+                        },
+                        degree: "",
+                        school: "",
+                    },
+                ],
             };
         });
     };
 
-    removeEducation = (e, id) => {
-        this.setState((prevState) => {
-            const newEducation = prevState.cv.education.filter((education) => {
+    const removeEducation = (e, id) => {
+        setCv((prevState) => {
+            const newEducation = prevState.education.filter((education) => {
                 return education.id !== id;
             });
             return {
-                cv: {
-                    ...prevState.cv,
-                    education: newEducation,
-                },
+                ...prevState,
+                education: newEducation,
             };
         });
     };
 
-    sortExperienceAndEducation() {
-        this.setState((prevState) => {
-            const sortedExperience = prevState.cv.experience.sort(
+    const sortExperienceAndEducation = () => {
+        setCv((prevState) => {
+            const sortedExperience = prevState.experience.sort(
                 (current, last) => {
                     return +current.from.year < +last.from.year;
                 }
             );
-            const sortedEducation = prevState.cv.education.sort(
+            const sortedEducation = prevState.education.sort(
                 (current, last) => {
                     return +current.from.year < +last.from.year;
                 }
             );
             return {
-                cv: {
-                    ...prevState.cv,
-                    experience: sortedExperience,
-                    education: sortedEducation,
-                },
+                ...prevState,
+                experience: sortedExperience,
+                education: sortedEducation,
             };
         });
-    }
-
-    clearCV = () => {
-        this.setState({ cv: emptyCV });
     };
 
-    render() {
-        const { cv, mode } = this.state;
-        return (
-            <div className="cv">
-                <form>
-                    <Personalia
-                        personalia={cv.personalia}
-                        mode={mode}
-                        onChange={this.changePersonalia}
-                    />
-                    <Experiences
-                        experience={cv.experience}
-                        onChange={this.changeExperience}
-                        onAdd={this.addExperience}
-                        onRemove={this.removeExperience}
-                        mode={mode}
-                    />
-                    <Education
-                        education={cv.education}
-                        mode={mode}
-                        onChange={this.changeEducation}
-                        onAdd={this.addEducation}
-                        onRemove={this.removeEducation}
-                    />
-                </form>
-                <button className={mode.preview ? "edit" : ""} type="submit" onClick={this.togglePreview}>
-                    {mode.preview ? "Edit" : "Preview"}
+    const clearCV = () => {
+        setCv(emptyCV);
+    };
+
+    return (
+        <div className="cv">
+            <form>
+                <Personalia
+                    personalia={cv.personalia}
+                    mode={mode}
+                    onChange={changePersonalia}
+                />
+                <Experiences
+                    experience={cv.experience}
+                    onChange={changeExperience}
+                    onAdd={addExperience}
+                    onRemove={removeExperience}
+                    mode={mode}
+                />
+                <Education
+                    education={cv.education}
+                    mode={mode}
+                    onChange={changeEducation}
+                    onAdd={addEducation}
+                    onRemove={removeEducation}
+                />
+            </form>
+            <button
+                className={mode.preview ? "edit" : ""}
+                type="submit"
+                onClick={togglePreview}
+            >
+                {mode.preview ? "Edit" : "Preview"}
+            </button>
+            {mode.preview ? null : (
+                <button className="clear-cv" onClick={clearCV}>
+                    Reset
                 </button>
-                {mode.preview ? null : (
-                    <button className="clear-cv" onClick={this.clearCV}>
-                        Reset
-                    </button>
-                )}
-            </div>
-        );
-    }
-}
+            )}
+        </div>
+    );
+};
 
 export default App;
