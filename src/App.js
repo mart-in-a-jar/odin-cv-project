@@ -281,12 +281,12 @@ const App = () => {
         setCv((prevState) => {
             const sortedExperience = prevState.experience.sort(
                 (current, last) => {
-                    return +current.from.year < +last.from.year;
+                    return +current.from.year - +last.from.year;
                 }
             );
             const sortedEducation = prevState.education.sort(
                 (current, last) => {
-                    return +current.from.year < +last.from.year;
+                    return +current.from.year - +last.from.year;
                 }
             );
             return {
