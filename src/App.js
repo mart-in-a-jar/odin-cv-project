@@ -304,12 +304,12 @@ class App extends Component {
         this.setState((prevState) => {
             const sortedExperience = prevState.cv.experience.sort(
                 (current, last) => {
-                    return +current.from.year < +last.from.year;
+                    return +last.from.year - +current.from.year;
                 }
             );
             const sortedEducation = prevState.cv.education.sort(
                 (current, last) => {
-                    return +current.from.year < +last.from.year;
+                    return +last.from.year - +current.from.year;
                 }
             );
             return {
